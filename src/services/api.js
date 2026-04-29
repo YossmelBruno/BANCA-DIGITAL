@@ -1,16 +1,23 @@
-const BASE = import.meta.env.VITE_API_URL || "https://banca-digital-backend-production.up.railway.app/api";
+const BASE =
+  import.meta.env.VITE_API_URL ||
+  "https://banca-digital-backend-production.up.railway.app/api";
 
-//token
-export const getToken = () => localStorage.getItem("token");
+// 🔥 token seguro
+export const getToken = () => {
+  const token = localStorage.getItem("token");
+  return token && token !== "undefined" && token !== "null" ? token : null;
+};
 
-//Un fetch para evitar que se repita el código
+// 🔥 fetch centralizado
 const request = async (endpoint, options = {}) => {
   try {
+    const token = getToken();
+
     const res = await fetch(`${BASE}${endpoint}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
-        ...(getToken() && { Authorization: `Bearer ${getToken()}` })
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
       }
     });
 
@@ -22,28 +29,22 @@ const request = async (endpoint, options = {}) => {
   }
 };
 
-
-// usuarios
+// -------------------- USUARIOS --------------------
 export const loginAPI = (usuario, password) =>
   request("/login", {
     method: "POST",
     body: JSON.stringify({ usuario, password })
   });
 
+// -------------------- SALDO --------------------
+export const getSaldoAPI = () => request("/saldo");
 
-//usuario logueado
-export const getSaldoAPI = () =>
-  request("/saldo");
-
-
-//transacciones
+// -------------------- TRANSFERENCIA --------------------
 export const transferirAPI = (monto) =>
   request("/transferir", {
     method: "POST",
     body: JSON.stringify({ monto })
   });
 
-
-//HISTORIAL - transacciones
-export const getHistorialAPI = () =>
-  request("/historial");
+// -------------------- HISTORIAL --------------------
+export const getHistorialAPI = () => request("/historial");

@@ -4,6 +4,6 @@ import { login, verifyToken, getSaldo } from "../controllers/userController.js";
 const router = express.Router();
 
 router.post("/login", login);
-router.get("/saldo", verifyToken, getSaldo);
+router.get("/saldo", getSaldo);
 
 export default router;

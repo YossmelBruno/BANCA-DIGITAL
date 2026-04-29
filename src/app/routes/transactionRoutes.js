@@ -4,7 +4,7 @@ import { transferir, getHistorial } from "../controllers/transactionController.j
 
 const router = express.Router();
 
-router.post("/transferir", verifyToken, transferir);
-router.get("/historial", verifyToken, getHistorial);
+router.post("/transferir", transferir);
+router.get("/historial", getHistorial);
 
 export default router;

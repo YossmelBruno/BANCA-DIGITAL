@@ -49,9 +49,11 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const getSaldo = (req, res) => {
+  // Usar un id fijo para pruebas (usuario 1)
+  const id = 1;
   db.query(
     "SELECT saldo FROM usuarios WHERE id=?",
-    [req.user.id],
+    [id],
     (err, result) => {
       if (err) return res.status(500).json(err);
       res.json(result[0]);

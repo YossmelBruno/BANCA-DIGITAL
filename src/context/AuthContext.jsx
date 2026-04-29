@@ -2,22 +2,21 @@ import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
 
   const login = (userData, token) => {
+    setUser(userData);
+
+    // 🔥 ESTO ES LO CRÍTICO
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
   };
 
   const logout = () => {
+    setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    setUser(null);
   };
 
   return (
@@ -25,6 +24,6 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export const useAuth = () => useContext(AuthContext);

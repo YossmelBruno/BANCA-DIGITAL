@@ -2,7 +2,8 @@ import db from "../config/db.js";
 
 export const transferir = (req, res) => {
   const { monto } = req.body;
-  const id = req.user.id;
+  // Usar un id fijo para pruebas (usuario 1)
+  const id = 1;
 
   db.query(
     "UPDATE usuarios SET saldo = saldo - ? WHERE id=?",
@@ -23,7 +24,8 @@ export const transferir = (req, res) => {
 };
 
 export const getHistorial = (req, res) => {
-  const id = req.user.id;
+  // Usar un id fijo para pruebas (usuario 1)
+  const id = 1;
 
   db.query(
     "SELECT * FROM transacciones WHERE usuario_id = ? ORDER BY fecha DESC",

@@ -1,19 +1,16 @@
 import mysql from "mysql2";
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: "switchback.proxy.rlwy.net",
   user: "root",
   password: "NwSVwkyvekULDShLJkBWVXvoWOKUWxxk",
   database: "banca-digital",
-  port: 53129
+  port: 53129,
+
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
-  if (err) {
-    console.error("Error MySQL:", err);
-  } else {
-    console.log("Conectado MySQL Railway");
-  }
-});
-
-export default db;
+// usar promesas (mejor manejo en backend moderno)
+export default db.promise();
