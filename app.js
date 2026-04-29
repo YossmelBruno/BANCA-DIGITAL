@@ -2,8 +2,11 @@
 import express from "express";
 import cors from "cors";
 
-// rutas //ENZO elimina si hay de mas 
-import usuariosRoutes from "./src/routes/usuarios.routes.js";
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const transactionRoutes = require("./routes/transactionRoutes");
+
+
 
 const app = express();
 
@@ -12,7 +15,7 @@ app.use(cors());
 app.use(express.json()); 
 // 🔹 Ruta base
 app.get("/", (req, res) => {
-  res.send("API Banca Digital funcionando 🚀");
+  res.send("API Banca Digital funcionando ");
 });
 
 
