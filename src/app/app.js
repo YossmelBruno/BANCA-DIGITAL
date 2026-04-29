@@ -1,18 +1,13 @@
-// app.js
-import express from "express";
-import cors from "cors";
+const express = require("express");
+const router = express.Router();
 
+const {
+  login,
+  verifyToken,
+  getSaldo,
+  transferir
+} = require("../controllers/userController");
 
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const transactionRoutes = require("./routes/transactionRoutes");
+router.post("/login", login); 
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-app.use("/api", authRoutes);
-app.use("/api", userRoutes);
-app.use("/api", transactionRoutes);
-
-module.exports = app;
+module.exports = router;

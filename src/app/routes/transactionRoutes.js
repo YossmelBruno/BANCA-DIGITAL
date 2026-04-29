@@ -1,9 +1,10 @@
-const express = require("express");
+import express from "express";
+import verifyToken from "../middleware/authMiddleware.js";
+import { transferir, getHistorial } from "../controllers/transactionController.js";
+
 const router = express.Router();
-const verifyToken = require("../middleware/authMiddleware");
-const { transferir, getHistorial } = require("../controllers/transactionController");
 
 router.post("/transferir", verifyToken, transferir);
 router.get("/historial", verifyToken, getHistorial);
 
-module.exports = router;
+export default router;

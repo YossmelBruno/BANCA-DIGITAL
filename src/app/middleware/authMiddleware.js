@@ -1,7 +1,11 @@
-function verifyToken(req, res, next) {
-  const token = req.headers["authorization"];
+import jwt from "jsonwebtoken";
 
-  if (!token) return res.status(403).json({ msg: "No token" });
+export default function verifyToken(req, res, next) {
+  const auth = req.headers["authorization"];
+
+  if (!auth) return res.status(403).json({ msg: "No token" });
+
+  const token = auth.split(" ")[1];
 
   jwt.verify(token, "secreto123", (err, decoded) => {
     if (err) return res.status(403).json({ msg: "Token inválido" });

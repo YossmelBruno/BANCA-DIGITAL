@@ -1,13 +1,15 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+import jwt from "jsonwebtoken";
+import db from "../config/db.js";
 
-app.post("/login", (req, res) => {
+export const login = (req, res) => {
   const { usuario, password } = req.body;
 
-  db.query("SELECT * FROM usuarios WHERE usuario=?", [usuario],
+  db.query(
+    "SELECT * FROM usuarios WHERE usuario=?",
+    [usuario],
     (err, result) => {
-
-      if (result.length === 0) {
+      if (err) return res.status(500).json(err);
+      if (!result || result.length === 0) {
         return res.status(401).json({ msg: "Usuario no existe" });
       }
 
@@ -24,13 +26,16 @@ app.post("/login", (req, res) => {
       );
 
       res.json({ token, user });
-    });
-});
+    }
+  );
+};
 
-function verifyToken(req, res, next) {
-  const token = req.headers["authorization"];
+export const verifyToken = (req, res, next) => {
+  const auth = req.headers["authorization"];
 
-  if (!token) return res.status(403).json({ msg: "No token" });
+  if (!auth) return res.status(403).json({ msg: "No token" });
+
+  const token = auth.split(" ")[1];
 
   jwt.verify(token, "secreto123", (err, decoded) => {
     if (err) return res.status(403).json({ msg: "Token inválido" });
@@ -38,30 +43,15 @@ function verifyToken(req, res, next) {
     req.user = decoded;
     next();
   });
-}
+};
 
-app.get("/saldo", verifyToken, (req, res) => {
-  db.query("SELECT saldo FROM usuarios WHERE id=?",
+export const getSaldo = (req, res) => {
+  db.query(
+    "SELECT saldo FROM usuarios WHERE id=?",
     [req.user.id],
     (err, result) => {
+      if (err) return res.status(500).json(err);
       res.json(result[0]);
-    });
-});
-
-app.post("/transferir", verifyToken, (req, res) => {
-  const { monto } = req.body;
-
-  const id = req.user.id;
-
-  // descontar saldo
-  db.query("UPDATE usuarios SET saldo = saldo - ? WHERE id=?",
-    [monto, id]);
-
-  // guardar transacción
-  db.query(
-    "INSERT INTO transacciones (usuario_id, tipo, monto) VALUES (?, 'retiro', ?)",
-    [id, monto]
+    }
   );
-
-  res.json({ msg: "Transferencia registrada" });
-});
+};

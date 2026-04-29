@@ -1,8 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const verifyToken = require("../middleware/authMiddleware");
-const { getSaldo } = require("../controllers/userController");
+import express from "express";
+import { login, verifyToken, getSaldo } from "../controllers/userController.js";
 
+const router = express.Router();
+
+router.post("/login", login);
 router.get("/saldo", verifyToken, getSaldo);
 
-module.exports = router;
+export default router;

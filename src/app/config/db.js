@@ -1,13 +1,13 @@
 import mysql from "mysql2";
 
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "123456",
-  database: "banca_digital",
+  password: "",
+  database: "banca-digital",
 });
 
-connection.connect((err) => {
+db.connect((err) => {
   if (err) {
     console.error("Error de conexión:", err);
   } else {
@@ -15,4 +15,4 @@ connection.connect((err) => {
   }
 });
 
-export default connection;
+export default db;
