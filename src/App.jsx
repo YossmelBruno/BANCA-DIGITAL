@@ -10,7 +10,7 @@ import Historial from "./pages/Historial";
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/BANCA-DIGITAL/">
         <Navbar />
         <Routes>
           <Route path="/login" element={<Login />} />

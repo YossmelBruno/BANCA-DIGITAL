@@ -1,5 +1,8 @@
+import "dotenv/config";
 import jwt from "jsonwebtoken";
 import db from "../config/db.js";
+
+const JWT_SECRET = process.env.JWT_SECRET || "secreto123";
 
 export const login = (req, res) => {
   const { usuario, password } = req.body;
@@ -21,7 +24,7 @@ export const login = (req, res) => {
 
       const token = jwt.sign(
         { id: user.id, rol: user.rol },
-        "secreto123",
+        JWT_SECRET,
         { expiresIn: "1h" }
       );
 
@@ -37,7 +40,7 @@ export const verifyToken = (req, res, next) => {
 
   const token = auth.split(" ")[1];
 
-  jwt.verify(token, "secreto123", (err, decoded) => {
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ msg: "Token inválido" });
 
     req.user = decoded;

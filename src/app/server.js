@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
@@ -5,6 +6,7 @@ import transactionRoutes from "./routes/transactionRoutes.js";
 import db from "./config/db.js";
 
 const app = express();
+const PORT = process.env.PORT || 3006;
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +21,6 @@ app.get("/api/usuarios", (req, res) => {
   });
 });
 
-app.listen(3006, () => {
-  console.log("Servidor corriendo en http://localhost:3006");
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

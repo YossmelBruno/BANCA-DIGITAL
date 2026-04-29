@@ -1,5 +1,6 @@
 {
   "name": "banca-digital",
+  "homepage": "https://yossmelbruno.github.io/BANCA-DIGITAL",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,6 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "backend": "node src/app/server.js",
+    "start": "node src/app/server.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
