@@ -11,23 +11,21 @@ Aplicación web de banca digital con frontend React/Vite y backend Node.js/Expre
 3. En GitHub, ve a Settings > Pages y selecciona la rama `main` y carpeta `docs/`.
 4. Tu frontend estará disponible en: `https://yossmelbruno.github.io/BANCA-DIGITAL/`
 
-### Backend (Render)
+### Backend (Railway)
 
-1. Crea una cuenta en [Render](https://render.com).
-2. Conecta tu repositorio GitHub.
-3. Crea un nuevo servicio tipo "Web Service".
-4. Configura:
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
-5. Agrega las variables de entorno:
-   - `NODE_ENV=production`
-   - `PORT=10000`
-   - `DB_HOST=tu_host_mysql`
-   - `DB_USER=tu_usuario_mysql`
-   - `DB_PASSWORD=tu_password_mysql`
-   - `DB_NAME=banca-digital`
-   - `JWT_SECRET=tu_secreto_jwt`
-6. Render te dará una URL como `https://banca-digital-backend.onrender.com`.
+1. Crea una cuenta en [Railway](https://railway.app).
+2. Crea un nuevo proyecto y agrega "MySQL".
+3. Una vez creado MySQL, copia la variable `MYSQL_URL` (contiene host, usuario, password y puerto).
+4. Agrega un nuevo servicio "Node.js" desde "New" → "GitHub Repo".
+5. Conecta tu repositorio GitHub.
+6. En variables de entorno del servicio Node.js:
+   - Agrega `MYSQL_URL` = (el valor de MySQL)
+   - Agrega `PORT` = `10000`
+   - Agrega `JWT_SECRET` = `tu_secreto_jwt`
+   - Agrega `NODE_ENV` = `production`
+7. Deploy automático.
+
+**Nota:** El código ahora detecta automáticamente `MYSQL_URL` para Railway.
 
 ### Base de datos
 
