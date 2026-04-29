@@ -1,9 +1,9 @@
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:3006/api";
+const BASE = import.meta.env.VITE_API_URL || "https://banca-digital-backend-production.up.railway.app/api";
 
-// 📌 TOKEN
+//token
 export const getToken = () => localStorage.getItem("token");
 
-// 📌 FUNCIÓN BASE PARA FETCH (evita repetir código)
+//Un fetch para evitar que se repita el código
 const request = async (endpoint, options = {}) => {
   try {
     const res = await fetch(`${BASE}${endpoint}`, {
@@ -23,7 +23,7 @@ const request = async (endpoint, options = {}) => {
 };
 
 
-// 🔐 LOGIN (tabla: usuarios)
+// usuarios
 export const loginAPI = (usuario, password) =>
   request("/login", {
     method: "POST",
@@ -31,12 +31,12 @@ export const loginAPI = (usuario, password) =>
   });
 
 
-// 💰 SALDO (usuario logueado)
+//usuario logueado
 export const getSaldoAPI = () =>
   request("/saldo");
 
 
-// 💸 TRANSFERENCIA (tabla: transacciones)
+//transacciones
 export const transferirAPI = (monto) =>
   request("/transferir", {
     method: "POST",
@@ -44,6 +44,6 @@ export const transferirAPI = (monto) =>
   });
 
 
-// 📊 HISTORIAL (tabla: transacciones)
+//HISTORIAL - transacciones
 export const getHistorialAPI = () =>
   request("/historial");
