@@ -2,32 +2,17 @@
 import express from "express";
 import cors from "cors";
 
-//Rutas
+
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 
-
-
 const app = express();
-
-// 🔹 Middlewares
 app.use(cors());
-app.use(express.json()); 
-// 🔹 Ruta base
-app.get("/", (req, res) => {
-  res.send("API Banca Digital funcionando ");
-});
+app.use(express.json());
 
+app.use("/api", authRoutes);
+app.use("/api", userRoutes);
+app.use("/api", transactionRoutes);
 
-app.use("/api/usuarios", usuariosRoutes);
-
-
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({
-    message: "Error interno del servidor"
-  });
-});
-
-export default app;
+module.exports = app;
